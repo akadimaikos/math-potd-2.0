@@ -11,6 +11,7 @@ from times_answered import update_times_answered, restart_times_answered
 from picture_problem import take_picture
 import aiofiles
 import asyncio
+print(f"Commands loaded: {len(tree.commands)}")
 
 load_dotenv()
 
