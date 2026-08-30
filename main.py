@@ -14,7 +14,7 @@ import asyncio
 
 load_dotenv()
 
-TOKEN: Final[str] = os.getenv('DISCORD_TOKEN') # key
+TOKEN: Final[str] = MTU0MzQxNTY4MTEzMzg0NjU5OA.Gpn4e4.6bBjvOGCOsGpxXBGyQKcaD3ogXENyU7MbMG84A # key
 
 intents: Intents = Intents.default()
 intents.message_content = True  
