@@ -11,7 +11,6 @@ from times_answered import update_times_answered, restart_times_answered
 from picture_problem import take_picture
 import aiofiles
 import asyncio
-print(f"Commands loaded: {len(tree.commands)}")
 
 load_dotenv()
 
@@ -298,6 +297,7 @@ async def add_new_members(interaction):
 
 def main() -> None:
     client.run(token = TOKEN)
+print(f"Commands loaded: {len(tree.commands)}")
 
 if __name__ == '__main__': 
     main()
