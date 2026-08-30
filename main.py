@@ -34,10 +34,10 @@ async def send_message(message: Message, user_message: str, channel: str) -> Non
     except Exception as e: 
         print(e) # use logging later
         
-@tree.command(name = "sync", description = "Syncing command tree (don't use this command basically)", guild=discord.Object(id=1017633440184664226))
+@tree.command(name = "sync", description = "Syncing command tree (don't use this command basically)", guild=discord.Object(id=1197729337634463774))
 async def sync(interaction: discord.Interaction):
     if interaction.user.id == 814900193883455548:
-        await tree.sync(guild=discord.Object(id=1017633440184664226))
+        await tree.sync(guild=discord.Object(id=1197729337634463774))
         print("Command tree synced.")
     else:
         await interaction.response.send_message("don't use this command lmao")
@@ -61,7 +61,7 @@ async def on_message(message: Message) -> None:
     print(f'[{channel}] {username}: "{user_message}"')
     await send_message(message, user_message, channel)
     
-@tree.command(name = "amc_problem_generation", description = "Generate an AMC problem and specify the version/difficulty", guild=discord.Object(id=1017633440184664226))
+@tree.command(name = "amc_problem_generation", description = "Generate an AMC problem and specify the version/difficulty", guild=discord.Object(id=1197729337634463774))
 # @app_commands.check(is_admin) 
 async def amc_problem_generation(interaction, version: str, lower: int, upper: int) -> None:
     await interaction.response.defer()
@@ -80,7 +80,7 @@ async def amc_problem_generation_error(interaction: discord.Interaction, error: 
     if isinstance(error, app_commands.CheckFailure):
         await interaction.response.send_message("You do not have permission to run this command.", ephemeral = True)
         
-@tree.command(name = "custom_problem_generation", description = "Create custom problem with any difficulty/topic you want!", guild=discord.Object(id=1017633440184664226))
+@tree.command(name = "custom_problem_generation", description = "Create custom problem with any difficulty/topic you want!", guild=discord.Object(id=1197729337634463774))
 # @app_commands.check(is_admin) 
 async def custom_problem_generation(interaction, answer: str, image: discord.Attachment) -> None:
     await interaction.response.defer()
@@ -105,7 +105,7 @@ async def custom_problem_generation_error(interaction: discord.Interaction, erro
     if isinstance(error, app_commands.CheckFailure):
         await interaction.response.send_message("You do not have permission to run this command.", ephemeral = True)
   
-@tree.command(name = "problem", description = "Displays problem generated", guild=discord.Object(id=1017633440184664226))
+@tree.command(name = "problem", description = "Displays problem generated", guild=discord.Object(id=1197729337634463774))
 async def problem(interaction, custom_description: str = None, difficulty: str = None, topic: str = None) -> None:
     async with aiofiles.open('question.txt', 'r') as file:
         temp = await file.readline()
@@ -154,7 +154,7 @@ class ConfirmResetView(View):
         self.value = False
         self.stop()  # stop listening for interactions
 
-@tree.command(name="reset_leaderboard", description="Full reset of leaderboard (unrestorable)", guild=discord.Object(id=1017633440184664226))
+@tree.command(name="reset_leaderboard", description="Full reset of leaderboard (unrestorable)", guild=discord.Object(id=1197729337634463774))
 @app_commands.check(is_admin)
 async def reset_leaderboard(interaction: discord.Interaction):
     members = sorted(
@@ -178,7 +178,7 @@ async def reset_leaderboard_error(interaction: discord.Interaction, error: app_c
     if isinstance(error, app_commands.CheckFailure):
         await interaction.response.send_message("You do not have permission to run this command.", ephemeral=True)
         
-@tree.command(name = "reset_problem", description = "Full reset of attempts count & roles (do every problem)", guild=discord.Object(id=1017633440184664226))
+@tree.command(name = "reset_problem", description = "Full reset of attempts count & roles (do every problem)", guild=discord.Object(id=1197729337634463774))
 @app_commands.check(is_admin) 
 async def reset_problem(interaction): # resets work channel, attempt count & more
     await interaction.response.defer()  # acknowledge the interaction to prevent timeout
@@ -207,7 +207,7 @@ async def reset_problem(interaction: discord.Interaction, error: app_commands.Ap
     if isinstance(error, app_commands.CheckFailure):
         await interaction.response.send_message("You do not have permission to run this command.", ephemeral = True)
     
-@tree.command(name = "answer", description = "Answer the daily problem for spot on leaderboard", guild=discord.Object(id=1017633440184664226))
+@tree.command(name = "answer", description = "Answer the daily problem for spot on leaderboard", guild=discord.Object(id=1197729337634463774))
 async def answer(interaction, answer_choice: str) -> None:
     await interaction.response.defer()  # acknowledge the interaction to prevent timeout
     guild = interaction.guild
@@ -249,7 +249,7 @@ async def answer(interaction, answer_choice: str) -> None:
     await update_times_answered(username)
     await interaction.followup.send(embed=embed)  # follow up after defer
 
-@tree.command(name="view_leaderboard", description="Leaderboard for POTD", guild=discord.Object(id=1017633440184664226))
+@tree.command(name="view_leaderboard", description="Leaderboard for POTD", guild=discord.Object(id=1197729337634463774))
 async def view_leaderboard(interaction):
     async with aiofiles.open('global_leaderboard.txt', 'r') as file:
         all_users = await file.readlines()
@@ -282,7 +282,7 @@ async def view_leaderboard(interaction):
     )
     await interaction.response.send_message(embed=embed)
     
-@tree.command(name = "add_new_members", description = "Use this command when new members join to update leaderboard", guild=discord.Object(id=1017633440184664226))
+@tree.command(name = "add_new_members", description = "Use this command when new members join to update leaderboard", guild=discord.Object(id=1197729337634463774))
 async def add_new_members(interaction):
     members = sorted( # GPT helped with accessing all members for reset functionality
         (m for m in interaction.guild.members if not m.bot),  
