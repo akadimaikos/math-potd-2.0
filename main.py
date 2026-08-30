@@ -36,7 +36,7 @@ async def send_message(message: Message, user_message: str, channel: str) -> Non
         
 @tree.command(name = "sync", description = "Syncing command tree (don't use this command basically)", guild=discord.Object(id=1197729337634463774))
 async def sync(interaction: discord.Interaction):
-    if interaction.user.id == 814900193883455548:
+    if interaction.user.id == 765243457199276045:
         await tree.sync(guild=discord.Object(id=1197729337634463774))
         print("Command tree synced.")
     else:
