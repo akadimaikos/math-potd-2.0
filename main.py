@@ -65,14 +65,25 @@ async def on_message(message: Message) -> None:
 # @app_commands.check(is_admin) 
 async def amc_problem_generation(interaction, version: str, lower: int, upper: int) -> None:
     await interaction.response.defer()
-    await asyncio.create_task(take_picture(version, lower, upper)) # stops the function from getting blocked by running in separate thread
+    
+    # Run take_picture and wait for it to finish
+    problem_content = await take_picture(version, lower, upper)
+    
     async with aiofiles.open('order_answered.txt', 'w') as file: # clears order_answered because new problem generated
         pass
     
-    embed = discord.Embed(
-        title = f"Problem generation successful",
-        description = f"(hopefully)"
+    # Check if problem_content is valid before creating embed
+    if problem_content:
+        embed = discord.Embed(
+            title = f"Problem generation successful",
+            description = problem_content
         )
+    else:
+        embed = discord.Embed(
+            title = "Problem generation failed",
+            description = "No problem content was generated."
+        )
+        
     await interaction.followup.send(embed=embed)  # follow up after defer
     
 @amc_problem_generation.error
@@ -93,9 +104,13 @@ async def custom_problem_generation(interaction, answer: str, image: discord.Att
         
     await image.save("question.jpg")
     
+    # Read the file to get the content for the embed
+    async with aiofiles.open('question.txt', 'r') as file:
+        question_text = await file.read().strip()
+    
     embed = discord.Embed(
         title = f"Problem generation successful",
-        description = f"(hopefully)"
+        description = f"**Custom Problem:**\n{question_text}"
     )
 
     await interaction.followup.send(embed=embed)
@@ -186,7 +201,7 @@ async def reset_problem(interaction): # resets work channel, attempt count & mor
     channel = discord.utils.get(guild.text_channels, name="post-potd-work")
     await channel.purge()
     
-    members = sorted( # GPT helped with accessing all members for reset functionality
+    members = sorted ( # GPT helped with accessing all members for reset functionality
         (m for m in interaction.guild.members if not m.bot),  
         key=lambda m: m.joined_at  
     )
@@ -300,4 +315,3 @@ def main() -> None:
 
 if __name__ == '__main__': 
     main()
-
