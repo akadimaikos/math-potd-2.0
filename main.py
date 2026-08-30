@@ -297,7 +297,6 @@ async def add_new_members(interaction):
 
 def main() -> None:
     client.run(token = TOKEN)
-print(f"Commands loaded: {len(tree.commands)}")
 
 if __name__ == '__main__': 
     main()
